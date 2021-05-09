@@ -3,17 +3,17 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	char	find;
-	int		i;
+	int		len;
 
-	find = (unsigned int)c;
-	i = ft_strlen(s);
-	while (i > 0)
+	find = (char)c;
+	len = ft_strlen(s);
+	while (len > 0)
 	{
-		if (s[i] == find)
-			return ((char *)s + i);
-		i--;
+		if (s[len] == find)
+			return ((char *)&s[len]);
+		len--;
 	}
-	if (s[i] == find)
+	if (s[len] == find)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }

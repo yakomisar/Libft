@@ -8,30 +8,29 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c\
 	  ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c\
 	  ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c\
 	  ft_putendl_fd.c ft_putnbr_fd.c
-BONUS_PART = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlst.c\
-		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+BONUS_PART = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c\
+		ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c
 HEAD = libft.h
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -I.
 
-OBJ_FILES = $(SRC:.c=.o)
+OBJ_FILES = $(patsubst %.c,%.o,$(SRC))
 
-.c.o:
-	gcc $(FLAGS) -c $< -o $(<:.c=.o)
+OBJ_BONUS = $(patsubst %.c,%.o,$(BONUS_PART))
 
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES) $(HEAD) 
+$(NAME): $(OBJ_FILES) 
 	@echo "Сборка библиотеки..."
 	@ar rcs $(NAME) $(OBJ_FILES) $?
 	@echo "Сборка библиотеки выполнена."
 
-bonus:
+bonus: $(OBJ_FILES) $(OBJ_BONUS)
 	@echo "Сборка бонусной части задания.."
-	@make SRC="$(BONUS_PART)" all
+	@ar rcs $(NAME) $(OBJ_FILES) $(OBJ_BONUS)
 
 clean:
 	@echo "Удаление объектных файлов.o"
-	@rm -f $(OBJ_FILES)
+	@rm -f $(OBJ_FILES) $(OBJ_BONUS)
 	@echo "Объектные файлы удалены."
 
 fclean: clean
@@ -39,6 +38,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "Библиотека удалена."
 
-re: fclean all
+re: fclean $(NAME)
 
-.PHONY: clean fclean all re
+.PHONY: all clean fclean re bonus
