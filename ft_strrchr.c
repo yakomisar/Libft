@@ -2,18 +2,18 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
-	size_t	len;
-	char	*str;
+	char	find;
+	int		i;
 
-	i = 0;
-	len = ft_strlen(s);
-	str = (char *)s;
-	while (len >= 0)
+	find = (unsigned int)c;
+	i = ft_strlen(s);
+	while (i > 0)
 	{
-		if (str[len] == c)
-			return (&str[len]);
-		len--;
+		if (s[i] == find)
+			return ((char *)s + i);
+		i--;
 	}
-	return (NULL);
+	if (s[i] == find)
+		return ((char *)s);
+	return (0);
 }

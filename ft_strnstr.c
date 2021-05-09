@@ -2,25 +2,27 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	len_needle;
-	size_t	i;
-	size_t	place;
+	int		n;
+	size_t	m;
+	size_t	l;
+	char	*hay;
+	char	*need;
 
-	len_needle = ft_strlen(needle);
-	if (len_needle == 0)
-		return ((char *)&haystack[0]);
-	place = 0;
-	while (haystack[place] != '\0')
+	need = (char *)needle;
+	hay = (char *)haystack;
+	l = ft_strlen(needle);
+	if (l == 0)
+		return (&hay[0]);
+	if (len == 0)
+		return (NULL);
+	n = -1;
+	while (hay[++n] != '\0')
 	{
-		i = 0;
-		if (haystack[place] == needle[i])
-		{
-			while (haystack[place + i] && (haystack[place + i] == needle[i]) && needle[i] && i < len)
-				i++;
-			if (!needle[i])
-				return ((char *)&haystack[place]);
-		}
-		place++;
+		m = 0;
+		if (hay[n] == need[m])
+			while ((hay[n + m] == need[m]) && (m <= l))
+				if ((++m == l) && (((size_t)n + m <= len)))
+					return (&hay[n]);
 	}
 	return (NULL);
 }
