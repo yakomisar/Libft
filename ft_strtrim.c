@@ -1,13 +1,13 @@
 #include "libft.h"
 
-static int	ft_char_check(char const *str, char c)
+static int	ft_str_chr(const char *str, char a)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
 	{
-		if (str[i] == c)
+		if (str[i] == a)
 			return (1);
 		i++;
 	}
@@ -16,29 +16,29 @@ static int	ft_char_check(char const *str, char c)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*new;
-	size_t	i;
+	char	*str;
 	size_t	start;
-	size_t	finish;
+	size_t	end;
+	size_t	i;
 
 	if (s1 == NULL || set == NULL)
 		return (NULL);
+	end = ft_strlen(s1);
 	start = 0;
-	finish = ft_strlen(set);
 	i = 0;
-	while (s1[start] && ft_char_check(set, s1[start]))
+	while (s1[start] && ft_str_chr(set, s1[start]))
 		start++;
-	while ((start < finish) && ft_char_check(set, s1[finish - 1]))
-		finish--;
-	new = (char *)malloc(sizeof(char) * (finish - start + 1));
-	if (new == NULL)
+	while (end > start && ft_str_chr(set, s1[end - 1]))
+		end--;
+	str = (char *)malloc(end - start + 1);
+	if (str == NULL)
 		return (NULL);
-	while (start < finish)
+	while (start < end)
 	{
-		new[i] = s1[start];
-		start++;
+		str[i] = s1[start];
 		i++;
+		start++;
 	}
-	new[i] = '\0';
-	return (new);
+	str[i] = '\0';
+	return (str);
 }
